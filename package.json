@@ -1,0 +1,21 @@
+{
+  "name": "figma-plugin-playground",
+  "version": "1.0.0",
+  "main": "code.ts",
+  "scripts": {
+    "build": "webpack",
+    "dev": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@figma-plugin/helpers": "^0.15.2",
+    "webpack": "^5.96.1",
+    "webpack-dev-server": "^5.1.0"
+  },
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "webpack-cli": "^5.1.4"
+  }
+}

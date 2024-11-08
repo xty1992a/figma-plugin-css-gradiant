@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+
+    body {
+        text-align: center;
+        margin: 0;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #node {
+        background-color: #fff;
+        position: relative;
+    }
+
+
+    .point {
+        position: absolute;
+        border-radius: 50%;
+    }
+</style>
+<body>
+<div>
+<button id="exportNode">exportNode</button>
+<div id="node"></div>
+</div>
+
+
+<script>
+    document.getElementById('exportNode').onclick = () => {
+        parent.postMessage({pluginMessage: {type: 'exportNode'}}, '*')
+    }
+
+    const node = document.getElementById('node')
+
+    onmessage = (event) => {
+        const payload = event.data.pluginMessage.payload
+        console.log('ui收到消息', payload)
+
+        const fragment = document.createDocumentFragment()
+        const markPoint = (point, option) => {
+            const div = document.createElement('div')
+            const size = 5
+
+            div.className = 'point'
+            div.style.cssText = `
+              width: ${size}px;
+              height: ${size}px;
+              transform: translate(${point.x - size / 2}px, ${point.y - size / 2}px);
+              background-color: ${option.color}
+          `
+            fragment.appendChild(div)
+        }
+
+        // 顶点
+        payload.lines.forEach((line) => markPoint(line.start, {color: '#ffda37'}))
+
+        // 关键点
+        payload.points.forEach((point) => markPoint(point, {color: '#ffda37'}))
+
+        // 控制点
+        // payload.controls.forEach((point) => markPoint(point, {color: '#f44'}))
+
+        const {figma, web} = payload.controls
+
+        markPoint(figma.start, {color: '#f44'})
+        markPoint(web.start, {color: '#f44'})
+        markPoint(figma.end, {color: '#37ffca'})
+        markPoint(web.end, {color: '#37ffca'})
+
+        node.innerHTML = ''
+        node.appendChild(fragment)
+
+        console.log(payload.backgroundImage)
+
+        node.style.cssText = `
+         width: ${payload.node.width}px;
+         height: ${payload.node.height}px;
+         background-image: ${payload.backgroundImage};
+        `
+    }
+</script>
+</body>
+</html>
