@@ -157,6 +157,10 @@ class Vec {
         this.y = y;
     }
 
+    normalize(): Vec {
+        return this.divide(this.len());
+    }
+
     len2(): number {
         return this.x * this.x + this.y * this.y;
     }

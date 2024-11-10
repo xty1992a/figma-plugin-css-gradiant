@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@figma-plugin/helpers": "^0.15.2",
+    "@s7n/math": "^0.0.9",
     "webpack": "^5.96.1",
     "webpack-dev-server": "^5.1.0"
   },
