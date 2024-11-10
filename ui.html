@@ -15,8 +15,12 @@
     #node {
         background-color: #fff;
         position: relative;
+        margin: 0 auto;
     }
 
+    .text {
+        width: fit-content;
+    }
 
     .point {
         position: absolute;
@@ -26,7 +30,8 @@
 </style>
 <body>
 <div>
-<button id="exportNode">exportNode</button>
+<button id="exportNode">读取渐变</button>
+<p class="text"></p>
 <div id="node"></div>
 </div>
 
@@ -37,13 +42,13 @@
     }
 
     const node = document.getElementById('node')
+    const text = document.querySelector('.text')
 
     onmessage = (event) => {
         const payload = event.data.pluginMessage.payload
         console.log('ui收到消息', payload)
 
-        console.log(payload.backgroundImage)
-
+        text.innerText = payload.backgroundImage
         node.style.cssText = `
          width: ${payload.node.width}px;
          height: ${payload.node.height}px;
